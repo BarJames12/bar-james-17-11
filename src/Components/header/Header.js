@@ -1,11 +1,11 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
-import{RiSunCloudyLine} from "react-icons/ri"
-import logo from "../../image/rain.png"
+import { RiSunCloudyLine } from "react-icons/ri";
+import logo from "../../image/rain.png";
 const navigation = [
   { name: "Home", href: "/", current: false },
-  { name: "Favorites", href: "favorite", current: false },
+  { name: "Favorites", href: "/favorite", current: false },
 ];
 
 function classNames(...classes) {
@@ -32,16 +32,8 @@ export default function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-8 w-auto lg:hidden"
-                    src={logo}
-                    alt="Your Company"
-                  />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src={logo}
-                    alt="Your Company"
-                  />
+                  <img className="block h-8 w-auto lg:hidden" src={logo} alt="Your Company" />
+                  <img className="hidden h-8 w-auto lg:block" src={logo} alt="Your Company" />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex absolute inset-y-3 right-0 space-x-4">
