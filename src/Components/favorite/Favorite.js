@@ -31,8 +31,10 @@ function Favorite() {
   }
 
   function getIdArr(favoriteDetailes) {
-    let idArr = favoriteDetailes.map((a) => a.id);
-    return idArr;
+    if (favoriteDetailes !== null) {
+      let idArr = favoriteDetailes.map((a) => a.id);
+      return idArr;
+    }
   }
   async function organaizeInfo(idArr) {
     await getLocationsArr(idArr);
@@ -64,11 +66,11 @@ function Favorite() {
   return (
     <div className="container mx-auto h-full rounded-lg backdrop-blur-md bg-white/30  min-h-[70vh] animate__animated animate__fadeIn">
       <div className="flex flex-row flex-wrap justify-evenly ">
-        {idsArr.length === 0 && (
+        {idsArr === undefined && (
           <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-gray-600">No Favorites</h1>
         )}
 
-        {idsArr.length > 0 &&
+        {idsArr !== undefined &&
           favoritesArr.map((forecast, key) => {
             return (
               <div key={key} className="flex justify-between items-center m-2">
