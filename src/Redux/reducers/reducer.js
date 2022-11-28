@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { weatherInfo, location, errorMessage , locationsInfo, favoritesArr } from "./weatherReducer";
+import { weatherInfo, location, errorMessage , locationsInfo, favoritesArr  } from "./weatherReducer";
 
 //combine reducers
 const reducers = combineReducers({

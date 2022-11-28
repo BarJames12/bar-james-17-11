@@ -1,8 +1,8 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
-import { RiSunCloudyLine } from "react-icons/ri";
 import logo from "../../image/rain.png";
+import ThemeToggle from "../themeToggle/ThemeToggle";
+
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Favorites", href: "/favorite", current: false },
@@ -14,13 +14,12 @@ function classNames(...classes) {
 
 export default function Header() {
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-600 dark:bg-gray-800 ">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -37,6 +36,7 @@ export default function Header() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex absolute inset-y-3 right-0 space-x-4">
+                    <ThemeToggle />
                     {navigation.map((item) => (
                       <a
                         key={item.name}
@@ -45,7 +45,6 @@ export default function Header() {
                           item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
                           "px-3 py-2 rounded-md text-sm font-medium"
                         )}
-                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </a>
@@ -71,6 +70,9 @@ export default function Header() {
                   {item.name}
                 </a>
               ))}
+            </div>
+            <div className="ml-3 pb-4">
+              <ThemeToggle />
             </div>
           </Disclosure.Panel>
         </>

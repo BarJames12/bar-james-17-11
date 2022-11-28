@@ -6,6 +6,7 @@ const weatherInfo = (
     errorMessage: "",
     locationsInfo: [],
     favoritesArr: [{}],
+    weatherByCoord: {},
   },
   action
 ) => {
