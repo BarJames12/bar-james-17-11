@@ -1,5 +1,7 @@
 import axios from "axios";
 
+let apiAccuWeather = "pT7l1A36BoK7dSIoYkHs1sEOA9XJ2Gs1";
+
 export function getWeather(city) {
   return async function (dispatch) {
     let apiKey = "b21fed5f0213a94f298e15abfe94994d";
@@ -110,4 +112,9 @@ export function getWeatherById(id) {
         }
       });
   };
+}
+
+export function getAutoComplete (){ 
+
+  
 }

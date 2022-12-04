@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import logo from "../../image/rain.png";
+import logo from "../../Image/rain.png";
 import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const navigation = [
@@ -34,9 +34,11 @@ export default function Header() {
                   <img className="block h-8 w-auto lg:hidden" src={logo} alt="Your Company" />
                   <img className="hidden h-8 w-auto lg:block" src={logo} alt="Your Company" />
                 </div>
+                <span className="absolute inset-y-3 right-0 space-x-4 sm:right-64">
+                  <ThemeToggle />
+                </span>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex absolute inset-y-3 right-0 space-x-4">
-                    <ThemeToggle />
                     {navigation.map((item) => (
                       <a
                         key={item.name}
@@ -70,9 +72,6 @@ export default function Header() {
                   {item.name}
                 </a>
               ))}
-            </div>
-            <div className="ml-3 pb-4">
-              <ThemeToggle />
             </div>
           </Disclosure.Panel>
         </>

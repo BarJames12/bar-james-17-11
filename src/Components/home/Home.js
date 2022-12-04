@@ -7,6 +7,8 @@ import "animate.css";
 
 //action
 import { getWeather } from "../../Redux/actions/fetchWeather";
+import axios from "axios";
+import SearchBar from "../searchBar/SearchBar";
 
 export function convertToF(celsius) {
   // make the given fahrenheit variable equal the given celsius value
@@ -44,6 +46,17 @@ function Home() {
     return locationDetails;
   }
 
+  const getAutoComplete = (e) => {
+    e.preventDefault(e);
+    axios.get(
+      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=pT7l1A36BoK7dSIoYkHs1sEOA9XJ2Gs1&q=${city}`.then(
+        (response) => {
+          console.log(response.data);
+        }
+      )
+    );
+  };
+
   function getFutureForecast(weatherDetails) {
     let weatherInfo = weatherDetails.weatherInfo.futureForecast;
     if (weatherInfo !== undefined) {
@@ -78,6 +91,10 @@ function Home() {
       getWeatherInfoAction(locationDetails.cityName);
     }
   }
+
+  const handleOnSearchChange = (searchData) => {
+    console.log(searchData);
+  };
 
   useEffect(() => {
     if (clickedLocation === "") {
@@ -115,13 +132,13 @@ function Home() {
 
   return (
     <div>
+      {/* <SearchBar onSearchChange={handleOnSearchChange} /> */}
       <div className="flex justify-center mt-8 ">
         <form className="flex flex-col items-center" onSubmit={onSearchClick}>
           <div className="input flex">
             <input
-              className="w-96 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-25 md:w-96 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
-              name="name"
               placeholder="Search City"
               onChange={(e) => setCity(e.target.value)}
             />
@@ -134,16 +151,10 @@ function Home() {
           </div>
         </form>
       </div>
-      <div className="container
-       mt-4
-        mx-auto h-full
-        rounded-lg
-        backdrop-blur-md
-        bg-white/30
-        dark:bg-gray-500/30
-        min-h-[70vh]
-        animate__animated
-        animate__fadeIn ">
+      <div
+        className="container mt-4 mx-auto h-full rounded-lg  backdrop-blur-md bg-white/30 dark:bg-gray-500/30 min-h-[70vh] animate__animated
+        animate__fadeIn "
+      >
         <label className="inline-flex relative items-center cursor-pointer m-3">
           <input
             type="checkbox"
@@ -157,46 +168,46 @@ function Home() {
         </label>
         <div className="details flex flex-col mt-10 ">
           <br />
-          {locationDetails === undefined && (
+          {locationDetails === undefined ? (
             <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-gray-600">
               No data to show, Please try again later
             </h1>
-          )}
-          {locationDetails !== undefined && (
+          ) : (
             <div>
-              <div className="absolute right-10 h-20 w-20  ">
-                {locationDetails.isFollowed === true && (
-                  <>
-                    <BsStarFill
-                      className="w-10 h-10 text-red-600 cursor-pointer"
-                      onClick={() => onFollowClick(locationDetails)}
-                    />
-                  </>
-                )}
-                {locationDetails.isFollowed === false && (
-                  <>
-                    <BsStar
-                      className="w-10 h-10 text-red-600 cursor-pointer"
-                      onClick={() => onFollowClick(locationDetails)}
-                    />
-                  </>
-                )}
-              </div>
-
               <div className="flex flex-col items-center justify-center text-gray-700 dark:text-white p-10 ">
-                <div className="w-full max-w-screen-sm bg-white dark:bg-gray-600  p-10 rounded-xl ring-8 ring-white ring-opacity-40">
-                  <div className="flex justify-between">
+                <div className="w-full max-w-screen-sm bg-white dark:bg-gray-600 p-6 sm:p-10 rounded-xl ring-8 ring-white ring-opacity-40">
+                  <div className="flex justify-between items-center	">
                     <div className="flex flex-col ">
-                      {tempToggle === true && <span className="text-6xl font-bold">{locationDetails.temp}°C</span>}
-                      {tempToggle === false && (
-                        <span className="text-6xl font-bold">{convertToF(locationDetails.temp)}°F</span>
+                      <div className=" ">
+                        {locationDetails.isFollowed && (
+                          <>
+                            <BsStarFill
+                              className="w-8 h-8 lg:w-10 lg:h-10 text-red-600 cursor-pointer"
+                              onClick={() => onFollowClick(locationDetails)}
+                            />
+                          </>
+                        )}
+                        {!locationDetails.isFollowed && (
+                          <>
+                            <BsStar
+                              className=" w-8 h-8 lg:w-10 lg:h-10 text-red-600 cursor-pointer"
+                              onClick={() => onFollowClick(locationDetails)}
+                            />
+                          </>
+                        )}
+                      </div>
+                      {tempToggle ? (
+                        <span className=" sm:text-6xl font-bold">{locationDetails.temp}°C</span>
+                      ) : (
+                        <span className=" sm:text-6xl font-bold">{convertToF(locationDetails.temp)}°F</span>
                       )}
+
                       <span className="font-semibold mt-1 text-gray-500 dark:text-white">
                         {locationDetails.cityName + " " + locationDetails.country}
                       </span>
                     </div>
                     <img
-                      className="h-24 w-24 fill-current "
+                      className="md:h-20 md:w-24 md:block hidden fill-current "
                       alt="cloudy"
                       src={locationDetails.icon}
                       width="50"
@@ -204,34 +215,38 @@ function Home() {
                   </div>
                 </div>
 
-                <div className="flex flex-col space-y-6 w-full max-w-screen-sm bg-white p-10 mt-10 rounded-xl ring-8 ring-white ring-opacity-40 dark:text-white dark:bg-gray-600">
+                <div className="flex flex-col space-y-6 w-full max-w-screen-sm bg-white p-[10px] mt-10 rounded-xl ring-8 ring-white ring-opacity-40 dark:text-white dark:bg-gray-600">
                   <>
-                    {futureForecast === undefined && <p>No data!</p>}
-                    {futureForecast !== undefined &&
+                    {futureForecast === undefined ? (
+                      <p>No data!</p>
+                    ) : (
                       futureForecast.map((forecast, key) => {
                         return (
-                          <div key={key} className="flex justify-between items-center">
+                          <div key={key} className="flex justify-between md:text-lg  md:font-semibold items-center">
                             <>
-                              <span className="font-semibold text-lg w-1/4 ">{forecast.date}</span>
-                              <div className="flex items-center justify-end w-1/4 pr-10">
-                                <span className="font-semibold">{forecast.humidity}%</span>
-                                <FiDroplet />
+                              <span className=" text-lg ">{forecast.date}</span>
+                              <div className="flex items-center justify-start md:justify-end w-1/4 pr-10">
+                                <span className=" ">{forecast.humidity}%</span>
+                                <span className="">
+                                  <FiDroplet />
+                                </span>
                               </div>
-                              <img className="h-8 w-8 fill-current w-1/4" alt="cloudy" src={forecast.icon} width="50" />
-                              {tempToggle === true && (
-                                <span className="font-semibold text-lg w-1/4 text-right">
+                              <img className="h-8 w-8 md:block hidden fill-current " alt="cloudy" src={forecast.icon} />
+                              {tempToggle && (
+                                <span className="text-right w-[8rem]">
                                   {forecast.minTemp}° / {forecast.maxTemp}°
                                 </span>
                               )}
-                              {tempToggle === false && (
-                                <span className="font-semibold text-lg w-1/4 text-right">
+                              {!tempToggle && (
+                                <span className="text-right">
                                   {forecast.minTempOnF}° / {forecast.maxTempOnF}°
                                 </span>
                               )}
                             </>
                           </div>
                         );
-                      })}
+                      })
+                    )}
                   </>
                 </div>
               </div>

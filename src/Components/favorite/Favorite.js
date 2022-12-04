@@ -83,11 +83,9 @@ function Favorite() {
       </label>
 
       <div className="flex flex-row flex-wrap justify-evenly ">
-        {(idsArr === undefined || idsArr.length === 0) && (
+        {idsArr === undefined || idsArr.length === 0 ? (
           <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-gray-600">No Favorites</h1>
-        )}
-
-        {idsArr !== undefined &&
+        ) : (
           favoritesArr.map((forecast, key) => {
             return (
               <div key={key} className="flex justify-between items-center m-2 ">
@@ -105,7 +103,9 @@ function Favorite() {
                               {forecast.cityName}
                             </span>
                             <br />
-                            <span className="font-semibold mt-1 text-gray-500 dark:text-white  ml-4">{forecast.country}</span>
+                            <span className="font-semibold mt-1 text-gray-500 dark:text-white  ml-4">
+                              {forecast.country}
+                            </span>
                           </div>
                         </div>
                       </h2>
@@ -135,13 +135,12 @@ function Favorite() {
                             </span>
                           </div>
 
-                          {tempToggle === true && (
+                          {tempToggle === true ? (
                             <h1 className="text-6xl font-semibold  text-gray-800 dark:text-white">
                               {forecast.temp}
                               <span className="text-base"> C°</span>
                             </h1>
-                          )}
-                          {tempToggle === false && (
+                          ) : (
                             <h1 className="text-6xl font-semibold text-gray-800 dark:text-white">
                               {forecast.tempInF}
                               <span className="text-base "> F°</span>
@@ -154,7 +153,8 @@ function Favorite() {
                 </>
               </div>
             );
-          })}
+          })
+        )}
       </div>
     </div>
   );

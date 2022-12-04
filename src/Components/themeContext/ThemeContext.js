@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+const theme = {
+  dark: "dark",
+  light: "light",
+};
+
 const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem("current-theme");
@@ -7,10 +12,10 @@ const getInitialTheme = () => {
       return storedPrefs;
     }
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
+      return theme.dark;
     }
   }
-  return "light";
+  return theme.light;
 };
 
 export const ThemeContext = React.createContext();
