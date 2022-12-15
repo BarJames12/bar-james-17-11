@@ -4,7 +4,7 @@
 <b> https://james-weather-app.netlify.app/ </b>
 <p ><b>James Weather App</b><br></p>
 <br>
-<p ><b>React| Redux | Tailwind css</b><br > <br >Welcome to my weather app, here you can search for current and future forecast
+<p ><b>React | Redux | Tailwind css</b><br > <br >Welcome to my weather app, here you can search for current and future forecast
 for every location in the world, and also save them to your favorite.
 
 # Getting Started with Create React App
