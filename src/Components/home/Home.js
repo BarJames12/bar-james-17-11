@@ -8,8 +8,6 @@ import "animate.css";
 //action
 import { getWeather } from "../../Redux/actions/fetchWeather";
 import axios from "axios";
-import SearchBar from "../searchBar/SearchBar";
-
 export function convertToF(celsius) {
   // make the given fahrenheit variable equal the given celsius value
   // multiply the given celsius value by 9/5 then add 32
@@ -46,17 +44,6 @@ function Home() {
     return locationDetails;
   }
 
-  const getAutoComplete = (e) => {
-    e.preventDefault(e);
-    axios.get(
-      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=pT7l1A36BoK7dSIoYkHs1sEOA9XJ2Gs1&q=${city}`.then(
-        (response) => {
-          console.log(response.data);
-        }
-      )
-    );
-  };
-
   function getFutureForecast(weatherDetails) {
     let weatherInfo = weatherDetails.weatherInfo.futureForecast;
     if (weatherInfo !== undefined) {
@@ -67,10 +54,10 @@ function Home() {
           description: weatherInfo[i].weather[0],
           humidity: weatherInfo[i].main.humidity,
           icon: "https://openweathermap.org/img/wn/" + weatherInfo[i].weather[0].icon + ".png",
-          minTemp: weatherInfo[i].main.temp_min,
-          maxTemp: weatherInfo[i].main.temp_max,
-          maxTempOnF: convertToF(weatherInfo[i].main.temp_max),
-          minTempOnF: convertToF(weatherInfo[i].main.temp_min),
+          minTemp: Math.round(weatherInfo[i].main.temp_min),
+          maxTemp: Math.round(weatherInfo[i].main.temp_max),
+          maxTempOnF: Math.round(convertToF(weatherInfo[i].main.temp_max)),
+          minTempOnF: Math.round(convertToF(weatherInfo[i].main.temp_min)),
         };
         tempObj.date = timeConverter(tempObj.date);
 
@@ -91,10 +78,6 @@ function Home() {
       getWeatherInfoAction(locationDetails.cityName);
     }
   }
-
-  const handleOnSearchChange = (searchData) => {
-    console.log(searchData);
-  };
 
   useEffect(() => {
     if (clickedLocation === "") {
@@ -132,7 +115,6 @@ function Home() {
 
   return (
     <div>
-      {/* <SearchBar onSearchChange={handleOnSearchChange} /> */}
       <div className="flex justify-center mt-8 ">
         <form className="flex flex-col items-center" onSubmit={onSearchClick}>
           <div className="input flex">
@@ -197,9 +179,9 @@ function Home() {
                         )}
                       </div>
                       {tempToggle ? (
-                        <span className=" sm:text-6xl font-bold">{locationDetails.temp}°C</span>
+                        <span className=" sm:text-6xl font-bold">{Math.round(locationDetails.temp)}°C</span>
                       ) : (
-                        <span className=" sm:text-6xl font-bold">{convertToF(locationDetails.temp)}°F</span>
+                        <span className=" sm:text-6xl font-bold">{Math.round(convertToF(locationDetails.temp))}°F</span>
                       )}
 
                       <span className="font-semibold mt-1 text-gray-500 dark:text-white">
@@ -208,7 +190,7 @@ function Home() {
                     </div>
                     <img
                       className="md:h-20 md:w-24 md:block hidden fill-current "
-                      alt="cloudy"
+                      alt="weather"
                       src={locationDetails.icon}
                       width="50"
                     />
@@ -231,7 +213,11 @@ function Home() {
                                   <FiDroplet />
                                 </span>
                               </div>
-                              <img className="h-8 w-8 md:block hidden fill-current " alt="cloudy" src={forecast.icon} />
+                              <img
+                                className="h-8 w-8 md:block hidden fill-current "
+                                alt="weather"
+                                src={forecast.icon}
+                              />
                               {tempToggle && (
                                 <span className="text-right w-[8rem]">
                                   {forecast.minTemp}° / {forecast.maxTemp}°

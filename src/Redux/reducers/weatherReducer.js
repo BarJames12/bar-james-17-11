@@ -1,4 +1,4 @@
-const weatherInfo = (
+const weather = (
   state = {
     weatherInfo: {},
     favoriteLocationArr: [],
@@ -12,7 +12,7 @@ const weatherInfo = (
 ) => {
   //Check the action type
   if (action.type === "FETCH_WEATHER") {
-    state = { ...state, weatherInfo: action.payload };
+    state = { ...state, weatherInfo:action.payload };
   }
 
   // Add location to favorite and to localStorage
@@ -70,4 +70,4 @@ const weatherInfo = (
   }
   return state;
 };
-export default weatherInfo;
+export default weather;

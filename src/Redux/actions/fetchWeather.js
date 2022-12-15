@@ -7,6 +7,7 @@ export function getWeather(city) {
     let apiKey = "b21fed5f0213a94f298e15abfe94994d";
 
     if (city) {
+      console.log("test");
       await axios
         .get("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey + "&units=metric")
         .then((response) => {
@@ -15,7 +16,7 @@ export function getWeather(city) {
             cityName: weatherResponse.city.name,
             id: weatherResponse.city.id,
             country: weatherResponse.city.country,
-            temp: weatherResponse.list[0].main.temp,
+            temp:Math.round(weatherResponse.list[0].main.temp) ,
             weatherDescription: weatherResponse.list[0].weather[0].description,
             icon: "https://openweathermap.org/img/wn/" + weatherResponse.list[0].weather[0].icon + ".png",
             windSpeed: weatherResponse.list[0].wind.speed,
@@ -77,7 +78,7 @@ export function getWeather(city) {
         cityName: weatherRes.name,
         id: weatherRes.id,
         country: weatherRes.sys.country,
-        temp: weatherRes.main.temp,
+        temp:Math.round(weatherRes.main.temp) ,
         weatherDescription: weatherRes.weather[0].description,
         icon: "https://openweathermap.org/img/wn/" + weatherRes.weather[0].icon + ".png",
         windSpeed: weatherRes.wind.speed,
@@ -114,7 +115,4 @@ export function getWeatherById(id) {
   };
 }
 
-export function getAutoComplete (){ 
 
-  
-}
