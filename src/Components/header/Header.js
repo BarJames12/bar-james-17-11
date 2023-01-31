@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import logo from "../../Image/rain.png";
+import logo from "../../image/rain.png";
 import ThemeToggle from "../themeToggle/ThemeToggle";
 
 const navigation = [
