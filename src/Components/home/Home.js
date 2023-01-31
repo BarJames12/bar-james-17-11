@@ -20,6 +20,7 @@ export function convertToF(celsius) {
 function Home() {
   // set city
   const [city, setCity] = useState("");
+  const [search, setSearch] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const dispatch = useDispatch();
 
